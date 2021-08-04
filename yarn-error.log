@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add nodemon --dev
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js install
 
 PATH: 
-  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\ssss\bin;C:\Program Files (x86)\NetSarang\Xftp 6;C:\Program Files (x86)\NetSarang\Xftp 7;C:\Program Files (x86)\NetSarang\Xshell 6;C:\Program Files\VanDyke Software\Clients;C:\Program Files (x86)\Embarcadero\Studio\20.0\bin;C:\Users\Public\Documents\Embarcadero\Studio\20.0\Bpl;C:\Program Files (x86)\Embarcadero\Studio\20.0\bin64;C:\Users\Public\Documents\Embarcadero\Studio\20.0\Bpl\Win64;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files (x86)\Microsoft SQL Server\130\Tools\Binn;C:\Program Files\Microsoft SQL Server\130\Tools\Binn;C:\Program Files (x86)\Microsoft SQL Server\130\DTS\Binn;C:\Program Files\Microsoft SQL Server\130\DTS\Binn;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn;C:\Program Files (x86)\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn;C:\Program Files (x86)\Microsoft SQL Server\130\Tools\Binn\ManagementStudio;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files\nodejs;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit;C:\Program Files (x86)\Yarn\bin;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Calibre2;C:\Program Files\dotnet;D:\kindlegen;C:\Users\ssss\AppData\Local\Programs\Python\Python39\Scripts;C:\Users\ssss\AppData\Local\Programs\Python\Python39;C:\Users\ssss\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Bandizip;C:\Users\ssss\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\ssss\AppData\Roaming\npm;C:\Users\ssss\AppData\Local\Yarn\bin
+  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\ssss\bin;C:\Program Files (x86)\NetSarang\Xftp 6;C:\Program Files (x86)\NetSarang\Xftp 7;C:\Program Files (x86)\NetSarang\Xshell 6;C:\Program Files\VanDyke Software\Clients;C:\Program Files (x86)\Embarcadero\Studio\20.0\bin;C:\Users\Public\Documents\Embarcadero\Studio\20.0\Bpl;C:\Program Files (x86)\Embarcadero\Studio\20.0\bin64;C:\Users\Public\Documents\Embarcadero\Studio\20.0\Bpl\Win64;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files (x86)\Microsoft SQL Server\130\Tools\Binn;C:\Program Files\Microsoft SQL Server\130\Tools\Binn;C:\Program Files (x86)\Microsoft SQL Server\130\DTS\Binn;C:\Program Files\Microsoft SQL Server\130\DTS\Binn;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn;C:\Program Files (x86)\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn;C:\Program Files (x86)\Microsoft SQL Server\130\Tools\Binn\ManagementStudio;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files\nodejs;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit;C:\Program Files (x86)\Yarn\bin;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Calibre2;C:\Program Files\dotnet;D:\kindlegen;C:\Users\ssss\AppData\Local\Programs\Python\Python39\Scripts;C:\Users\ssss\AppData\Local\Programs\Python\Python39;C:\Users\ssss\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Bandizip;C:\Users\ssss\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\ssss\AppData\Roaming\npm;C:\Users\ssss\AppData\Local\Yarn\bin;C:\Program Files\heroku\bin
 
 Yarn version: 
   1.22.5
@@ -27,13 +27,32 @@ npm manifest:
     "description": "",
     "main": "index.js",
     "scripts": {
-      "start": "node index.js",
-      "test": "echo \"Error: no test specified\" && exit 1"
+      "build:ui": "rm -rf build && cd ../Full Stack Open 2021/notes && npm run build --prod && cp -r build ../../notes-backend",
+      "deploy": "git push heroku master",
+      "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push origin master && npm run deploy",
+      "logs:prod": "heroku logs --tail",
+      "start": "cross-env NODE_ENV=production node index.js",
+      "dev": "cross-env NODE_ENV=development nodemon index.js",
+      "test": "cross-env NODE_ENV=test jest --verbose --runInBand"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
-      "express": "^4.17.1"
+      "bcryptjs": "^2.4.3",
+      "cors": "^2.8.5",
+      "dotenv": "^10.0.0",
+      "express": "^4.17.1",
+      "express-async-errors": "^3.1.1",
+      "mongoose": "^5.13.3"
+    },
+    "devDependencies": {
+      "cross-env": "^7.0.3",
+      "jest": "^27.0.6",
+      "nodemon": "^2.0.12",
+      "supertest": "^6.1.4"
+    },
+    "jest": {
+      "testEnvironment": "node"
     }
   }
 

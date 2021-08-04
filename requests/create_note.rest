@@ -2,8 +2,9 @@ POST http://localhost:3001/api/notes
 Content-Type: application/json
 
 {
-    "content": "lol23333",
-    "important": true
+    "content": "user id of the note ...",
+    "important": true,
+    "userId": "6109ec6a5c0d07042892e51d"
 }
 
 ### 
@@ -28,3 +29,6 @@ Content-Type: application/json
     "name": "Superuser",
     "password": "salainen"
 }
+
+### 
+GET http://localhost:3001/api/users
